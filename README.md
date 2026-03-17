@@ -212,11 +212,3 @@ src/main/java/com/koushik/mq/
 └── benchmark/
     └── BenchmarkRunner.java      # Throughput benchmarking tool
 ```
-
-## Resume Bullet Points
-
-- Built a distributed message queue from scratch in Java with partitioned append-only logs, consumer groups with offset tracking, and ISR-based replication across a 3-broker cluster; benchmarked at 500,000+ messages/sec single-broker write throughput.
-
-- Implemented consumer group partition assignment enabling both load-balanced consumption (multiple consumers, one group) and fan-out (multiple groups); consumer lag metrics expose processing bottlenecks in real time via Prometheus dashboard.
-
-- Guaranteed message durability via leader-follower replication — messages committed only when all In-Sync Replicas acknowledge; automatic leader election on failure with under 5-second recovery; zero message loss across all fault injection tests.
