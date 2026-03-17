@@ -1,11 +1,8 @@
-.gradle/
 build/
-!gradle/wrapper/gradle-wrapper.jar
-*.class
-*.jar
-*.war
+.gradle/
+data/
 *.log
+.DS_Store
 .idea/
 *.iml
 .vscode/
-data/
