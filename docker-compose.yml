@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  broker1:
+    build: .
+    container_name: mq-broker1
+    environment:
+      BROKER_ID: 1
+      PORT: 8080
+      DATA_DIR: /data
+      DEFAULT_PARTITIONS: 3
+      REPLICATION_FACTOR: 2
+      PEERS: broker2:8080,broker3:8080
+    ports:
+      - "9092:8080"
+    volumes:
+      - ./data/broker1:/data
+    networks:
+      - mq-cluster
+
+  broker2:
+    build: .
+    container_name: mq-broker2
+    environment:
+      BROKER_ID: 2
+      PORT: 8080
+      DATA_DIR: /data
+      DEFAULT_PARTITIONS: 3
+      REPLICATION_FACTOR: 2
+      PEERS: broker1:8080,broker3:8080
+    ports:
+      - "9093:8080"
+    volumes:
+      - ./data/broker2:/data
+    networks:
+      - mq-cluster
+
+  broker3:
+    build: .
+    container_name: mq-broker3
+    environment:
+      BROKER_ID: 3
+      PORT: 8080
+      DATA_DIR: /data
+      DEFAULT_PARTITIONS: 3
+      REPLICATION_FACTOR: 2
+      PEERS: broker1:8080,broker2:8080
+    ports:
+      - "9094:8080"
+    volumes:
+      - ./data/broker3:/data
+    networks:
+      - mq-cluster
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: mq-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - mq-cluster
+
+networks:
+  mq-cluster:
+    driver: bridge
