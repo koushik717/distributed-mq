@@ -2,6 +2,36 @@
 
 A production-grade distributed message queue built from scratch in Java — inspired by Apache Kafka's core architecture. Features partitioned append-only logs, consumer groups with offset tracking, ISR-based replication, and Prometheus metrics.
 
+---
+
+## 🚀 Live Demo
+
+**Frontend Dashboard:** [mq-dashboard-pi.vercel.app](https://mq-dashboard-pi.vercel.app)
+
+| Broker | Status | URL |
+|--------|--------|-----|
+| Broker 1 | Live | http://157.230.83.134:9095 |
+| Broker 2 | Live | http://157.230.83.134:9093 |
+| Broker 3 | Live | http://157.230.83.134:9094 |
+
+### Try it yourself:
+```bash
+# Produce a message
+curl -X POST http://157.230.83.134:9095/topics/orders/messages \
+  -H "Content-Type: application/json" \
+  -d '{"key":"user-123","value":"order-placed"}'
+
+# Consume messages
+curl "http://157.230.83.134:9095/topics/orders/messages?offset=0&limit=10"
+
+# List topics
+curl http://157.230.83.134:9095/topics
+
+# Prometheus metrics: http://157.230.83.134:9099
+```
+
+---
+
 ## Architecture
 
 ```
